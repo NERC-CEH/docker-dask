@@ -19,8 +19,10 @@ EXPOSE 8786 8787
 
 WORKDIR ${DASK_USER_HOME}
 
+COPY ./docker-entrypoint.sh /usr/local/bin
+
 # Daskdev/dask uses dumb-init in-place of tini
 ENTRYPOINT ["dumb-init", "--"]
-CMD ["bash", "-c", "/usr/bin/prepare.sh && exec dask-scheduler"]
+CMD ["docker-entrypoint.sh"]
 
 USER $DASK_USER
